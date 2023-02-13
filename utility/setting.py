@@ -160,7 +160,7 @@ n_nearest_best_rate = 0.4
 # opt_list = [FRANKWOLFE, SELECTBESTDATA]
 # opt_list = [FRANKWOLFE]
 # data_type_list = [XSQUARE]
-# plot_name_dic[(optimization_methods_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
+# plot_name_dic[(solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
 
 # 実験1.5
 zikken_id = 2
@@ -185,7 +185,7 @@ problem_list = [INEQUALITYCONSTRAINT]
 # n_nearest_list = list(range(10, 1010, 10))
 n_nearest_best_rate = 0.4
 auto_n_nearest = True
-plot_name_dic[(optimization_methods_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
+plot_name_dic[(solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
 
 #実験2
 # zikken_id = 2

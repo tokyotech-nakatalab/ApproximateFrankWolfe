@@ -1,12 +1,12 @@
 from utility.setting import *
-from optimization_methods.compare_method.simulated_annealing import *
-from optimization_methods.compare_method.trust_region_method import *
-from optimization_methods.compare_method.simple_mathmatical_optimization import *
-from optimization_methods.compare_method.bayse_optimization import *
-from optimization_methods.compare_method.select_best_data import *
-from optimization_methods.proposal_method.frank_wolfe import FrankWolfe
-from optimization_methods.proposal_method.frank_wolfe2 import FrankWolfe2
-from optimization_methods.proposal_method.step_distance import StepDistance
+from solvers.compare_method.simulated_annealing import *
+from solvers.compare_method.trust_region_method import *
+from solvers.compare_method.simple_mathmatical_optimization import *
+from solvers.compare_method.bayse_optimization import *
+from solvers.compare_method.select_best_data import *
+from solvers.proposal_method.frank_wolfe import FrankWolfe
+from solvers.proposal_method.frank_wolfe2 import FrankWolfe2
+from solvers.proposal_method.step_distance import StepDistance
 
 
 def check_constraint():

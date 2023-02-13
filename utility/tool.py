@@ -18,7 +18,7 @@ def set_unique_parameter():
     """ ディレクトリの名前"""
     g.problem_dir = f"{problem_names[g.select_problem]}"
     g.data_type_dir = f"{data_type_names[g.select_data_type]}"
-    g.opt_method_dir = f"{optimization_methods_names[g.select_opt]}"
+    g.opt_method_dir = f"{solvers_names[g.select_opt]}"
     g.ml_method_dir = f"{mlmodel_names[g.select_ml]}"
     g.seed_dir = f"seed{g.seed}"
 
@@ -110,7 +110,7 @@ def generate_compare_directory():
 
 
 def generate_condition_list():
-    return [g.seed, g.val, optimization_methods_names[g.select_opt], mlmodel_names[g.select_ml], g.n_item, g.n_data, g.n_feature, g.n_user_available_x, get_noise()[g.noise_sigma], g.n_nearest]
+    return [g.seed, g.val, solvers_names[g.select_opt], mlmodel_names[g.select_ml], g.n_item, g.n_data, g.n_feature, g.n_user_available_x, get_noise()[g.noise_sigma], g.n_nearest]
 
 
 def set_data(solver, X_train, Y_train, X_test, Y_test):

@@ -4,7 +4,7 @@ from utility.module import *
 from utility.line_notify import *
 from experiment.generate_data import *
 from machine_learning.model.cga2m_regression import *
-from optimization.ml_modelize.linear_regression import *
+from solvers.ml_modelize.linear_regression import *
 from problem.base_problem import *
 from machine_learning.tools.select_model import *
 from utility.result_manager import *

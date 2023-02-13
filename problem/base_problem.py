@@ -1,11 +1,11 @@
 from utility.module import *
 from utility.setting import *
 from experiment.base_opt import *
-from optimization.ml_modelize.linear_regression import add_linear_regression_constraint, add_linear_regression_constraint_pulp
-from optimization.ml_modelize.random_forest import add_randomforest_regression_constraint
-from optimization.ml_modelize.supportvector_regression import add_supportvector_regression_constraint, add_supportvector_regression_constraint_casadi
-from optimization.ml_modelize.cga2m_regression import add_cga2m_regression_constraint
-from optimization.ml_modelize.polynomial_regression import add_polynomial_regression_constraint, add_polynomial_regression_constraint_casadi
+from solvers.ml_modelize.linear_regression import add_linear_regression_constraint, add_linear_regression_constraint_pulp
+from solvers.ml_modelize.random_forest import add_randomforest_regression_constraint
+from solvers.ml_modelize.supportvector_regression import add_supportvector_regression_constraint, add_supportvector_regression_constraint_casadi
+from solvers.ml_modelize.cga2m_regression import add_cga2m_regression_constraint
+from solvers.ml_modelize.polynomial_regression import add_polynomial_regression_constraint, add_polynomial_regression_constraint_casadi
 
 class BaseProblem(BaseOfData):
     def __init__(self) -> None:

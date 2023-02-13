@@ -3,7 +3,7 @@ from utility.module import *
 from utility.setting import *
 from experiment.base_opt import *
 from machine_learning.model.approximate_model import *
-from optimization_methods.base_optimization_method import *
+from solvers.base_optimization_method import *
 
 class StepDistance(BaseOptimizationMethod):
     def optimize(self, fs, new_s, init_x):

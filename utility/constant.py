@@ -73,7 +73,7 @@ mlmodel_names = {LINEARREGRESSION: "lr", RANDOMFOREST: "rf", SVRLINEAR: "sl", SV
 problem_names = {NONCONSTRAINT: "non-constraint", BOXCONSTRAINT: "box-constraint", BOXFEATURECONSTRAINT: "box-feature-constraint", DISKCONSTRAINT: "disk-constraint", INEQUALITYCONSTRAINT: "inequality-constraint"}
 data_type_names = {COMPLEX7: "complex7", SINX0: "sinx0", SINX0MOUNT2: "sinx0mount2", ROSENBROCK: "rosenbrock", ACKELY: "ackely", XSQUARE: "xsquare", 
                    SINX01MOUNT2: "sinx01mount2", MOUNT2: "mount2", RASTRIGIN: "rastrigin", LOGX: "logx", LOGX2: "logx2"}
-optimization_methods_names = {SIMULATEDANNEALING: "SimulatedAnnealing", TRUSTREGION: "TrustRegion", MATHMATICALOPTIMIZATION: "MathmaticalOptimization", FRANKWOLFE: "FrankWolfe",
+solvers_names = {SIMULATEDANNEALING: "SimulatedAnnealing", TRUSTREGION: "TrustRegion", MATHMATICALOPTIMIZATION: "MathmaticalOptimization", FRANKWOLFE: "FrankWolfe",
                               STEPDISTANCE: "StepDistance", BAYESIANOPTIMIZATIONMU: "BayesianOptimizationMu", BAYESIANOPTIMIZATIONLCB: "BayesianOptimizationLcb",
                               SELECTBESTDATA: "SelectBestData", FRANKWOLFE2: "FrankWolfe2"}
 
@@ -83,69 +83,69 @@ node_info = {"node_index": 2, "left_child": 3, "right_child": 4, "split_feature"
 
 #Color
 color_dic = {
-             (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[POLYNOMIALREGRESSION]): "c",
-             (optimization_methods_names[SELECTBESTDATA], mlmodel_names[KNNLINEARREGRESSION]): "m",     
-             (optimization_methods_names[SIMULATEDANNEALING], mlmodel_names[LIGHTGBM]): "red",
-             (optimization_methods_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION]): "blue",
-             (optimization_methods_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION]): "green",
+             (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[POLYNOMIALREGRESSION]): "c",
+             (solvers_names[SELECTBESTDATA], mlmodel_names[KNNLINEARREGRESSION]): "m",     
+             (solvers_names[SIMULATEDANNEALING], mlmodel_names[LIGHTGBM]): "red",
+             (solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION]): "blue",
+             (solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION]): "green",
 
-             (optimization_methods_names[SIMULATEDANNEALING], mlmodel_names[NEURALNETWORK]): "c",
-             (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]): "black",
-             (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRGAUSS]): "m",
-             (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRPOLY]): "yellow",
+             (solvers_names[SIMULATEDANNEALING], mlmodel_names[NEURALNETWORK]): "c",
+             (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]): "black",
+             (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRGAUSS]): "m",
+             (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRPOLY]): "yellow",
 
-             (optimization_methods_names[BAYESIANOPTIMIZATIONMU], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "blue",
-             (optimization_methods_names[BAYESIANOPTIMIZATIONLCB], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "blue",
+             (solvers_names[BAYESIANOPTIMIZATIONMU], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "blue",
+             (solvers_names[BAYESIANOPTIMIZATIONLCB], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "blue",
        
 
-             (optimization_methods_names[FRANKWOLFE], mlmodel_names[WEIGHTEDLINEARREGRESSION]): "red",
-             (optimization_methods_names[FRANKWOLFE], mlmodel_names[ANNLINEARREGRESSION]): "red",
-             (optimization_methods_names[STEPDISTANCE], mlmodel_names[ANNLINEARREGRESSION]): "blue",
-             (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[CGA2M]): "blue",
+             (solvers_names[FRANKWOLFE], mlmodel_names[WEIGHTEDLINEARREGRESSION]): "red",
+             (solvers_names[FRANKWOLFE], mlmodel_names[ANNLINEARREGRESSION]): "red",
+             (solvers_names[STEPDISTANCE], mlmodel_names[ANNLINEARREGRESSION]): "blue",
+             (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[CGA2M]): "blue",
 }
 
 #Plot Coordinate
 plot_coordinate_dic = {
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[POLYNOMIALREGRESSION]): 0.1,
-            (optimization_methods_names[SELECTBESTDATA], mlmodel_names[KNNLINEARREGRESSION]): -0.2,  
-            (optimization_methods_names[SIMULATEDANNEALING], mlmodel_names[LIGHTGBM]): -0.1,
-            (optimization_methods_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION]): 0,
-            (optimization_methods_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION]): 0.2,
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[POLYNOMIALREGRESSION]): 0.1,
+            (solvers_names[SELECTBESTDATA], mlmodel_names[KNNLINEARREGRESSION]): -0.2,  
+            (solvers_names[SIMULATEDANNEALING], mlmodel_names[LIGHTGBM]): -0.1,
+            (solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION]): 0,
+            (solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION]): 0.2,
 
 
-            (optimization_methods_names[SIMULATEDANNEALING], mlmodel_names[NEURALNETWORK]): -0.2,
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]): 0.2,
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRGAUSS]): 0.1,
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRPOLY]): 0.3, 
+            (solvers_names[SIMULATEDANNEALING], mlmodel_names[NEURALNETWORK]): -0.2,
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]): 0.2,
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRGAUSS]): 0.1,
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRPOLY]): 0.3, 
 
-            (optimization_methods_names[BAYESIANOPTIMIZATIONMU], mlmodel_names[GAUSSIANPROCESSREGRESSION]): 0.2,
-            (optimization_methods_names[BAYESIANOPTIMIZATIONLCB], mlmodel_names[GAUSSIANPROCESSREGRESSION]): 0.25,
+            (solvers_names[BAYESIANOPTIMIZATIONMU], mlmodel_names[GAUSSIANPROCESSREGRESSION]): 0.2,
+            (solvers_names[BAYESIANOPTIMIZATIONLCB], mlmodel_names[GAUSSIANPROCESSREGRESSION]): 0.25,
 
-            (optimization_methods_names[FRANKWOLFE], mlmodel_names[WEIGHTEDLINEARREGRESSION]): 0,
-            (optimization_methods_names[FRANKWOLFE], mlmodel_names[ANNLINEARREGRESSION]): 0,
-            (optimization_methods_names[STEPDISTANCE], mlmodel_names[ANNLINEARREGRESSION]): 0.3,
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[CGA2M]): 0.3,
+            (solvers_names[FRANKWOLFE], mlmodel_names[WEIGHTEDLINEARREGRESSION]): 0,
+            (solvers_names[FRANKWOLFE], mlmodel_names[ANNLINEARREGRESSION]): 0,
+            (solvers_names[STEPDISTANCE], mlmodel_names[ANNLINEARREGRESSION]): 0.3,
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[CGA2M]): 0.3,
 }
 
 plot_name_dic = {
-            (optimization_methods_names[SIMULATEDANNEALING], mlmodel_names[LIGHTGBM]): "LightGBM+SA",
-            (optimization_methods_names[SELECTBESTDATA], mlmodel_names[KNNLINEARREGRESSION]): "過去の最良解",  
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[POLYNOMIALREGRESSION]): "多項式回帰+IPOPT",
-            (optimization_methods_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION]): r"提案手法($\gamma=\frac{2}{k+2}$)",
-            (optimization_methods_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION]): r"提案手法($\gamma=\frac{1}{1000+k}$)",
+            (solvers_names[SIMULATEDANNEALING], mlmodel_names[LIGHTGBM]): "LightGBM+SA",
+            (solvers_names[SELECTBESTDATA], mlmodel_names[KNNLINEARREGRESSION]): "過去の最良解",  
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[POLYNOMIALREGRESSION]): "多項式回帰+IPOPT",
+            (solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION]): r"提案手法($\gamma=\frac{2}{k+2}$)",
+            (solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION]): r"提案手法($\gamma=\frac{1}{1000+k}$)",
 
-            (optimization_methods_names[SIMULATEDANNEALING], mlmodel_names[NEURALNETWORK]): "NN+SA",
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]): "LinearRegression+CBC",
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRGAUSS]): "SVR+IPOPT",
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRPOLY]): "SVR(POLY)+IPOPT",
+            (solvers_names[SIMULATEDANNEALING], mlmodel_names[NEURALNETWORK]): "NN+SA",
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]): "LinearRegression+CBC",
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRGAUSS]): "SVR+IPOPT",
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[SVRPOLY]): "SVR(POLY)+IPOPT",
 
-            (optimization_methods_names[BAYESIANOPTIMIZATIONMU], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "ベイズ最適化(Mu)",
-            (optimization_methods_names[BAYESIANOPTIMIZATIONLCB], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "ベイズ最適化(LCB)",
+            (solvers_names[BAYESIANOPTIMIZATIONMU], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "ベイズ最適化(Mu)",
+            (solvers_names[BAYESIANOPTIMIZATIONLCB], mlmodel_names[GAUSSIANPROCESSREGRESSION]): "ベイズ最適化(LCB)",
 
-            (optimization_methods_names[FRANKWOLFE], mlmodel_names[WEIGHTEDLINEARREGRESSION]): "proposed method",
-            (optimization_methods_names[FRANKWOLFE], mlmodel_names[ANNLINEARREGRESSION]): "proposed method",
-            (optimization_methods_names[STEPDISTANCE], mlmodel_names[ANNLINEARREGRESSION]): "proposed method",
-            (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[CGA2M]): "proposed method",
+            (solvers_names[FRANKWOLFE], mlmodel_names[WEIGHTEDLINEARREGRESSION]): "proposed method",
+            (solvers_names[FRANKWOLFE], mlmodel_names[ANNLINEARREGRESSION]): "proposed method",
+            (solvers_names[STEPDISTANCE], mlmodel_names[ANNLINEARREGRESSION]): "proposed method",
+            (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[CGA2M]): "proposed method",
 }
 
 # plot rate

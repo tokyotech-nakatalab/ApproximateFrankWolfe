@@ -274,7 +274,7 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
         # rho
         ######################################################################################
         if zikken_id == 1:
-            proposed_key = (optimization_methods_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])
+            proposed_key = (solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])
 
             fig, ax1 = plt.subplots(1,1,figsize=(10,8))
             x_zahyo = [i for i in range(len(compare_list))]
@@ -379,7 +379,7 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
 #                     ax2.set_ylabel("実行時間", fontname='MS Gothic')
 
 #                 for key in result_dic_for_plot.keys():
-#                     if n_plt == "noline" and key == (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]):
+#                     if n_plt == "noline" and key == (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]):
 #                         continue
 #                     res = np.array(result_dic_for_plot[key])
 #                     times = np.array(time_dic_for_plot[key])
@@ -459,7 +459,7 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
 #                     ax2.set_ylabel("実行時間", fontname='MS Gothic')
 
 #                 for key in result_dic_for_plot.keys():
-#                     if n_plt == "noline" and key == (optimization_methods_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]):
+#                     if n_plt == "noline" and key == (solvers_names[MATHMATICALOPTIMIZATION], mlmodel_names[LINEARREGRESSION]):
 #                         continue
 #                     res = np.array(result_dic_for_plot[key])
 #                     times = np.array(time_dic_for_plot[key])
@@ -550,7 +550,7 @@ def add_result_rmse_for_plot(result_dic_for_plot, rmse_dic_for_plot, r):
     
 
 def get_result_dic_key():
-    return (optimization_methods_names[g.select_opt], mlmodel_names[g.select_ml])
+    return (solvers_names[g.select_opt], mlmodel_names[g.select_ml])
 
 def output_result(init_x_list, opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list, opt_time_list, train_rmse, test_rmse, learing_time):
     data = [[obj_list[i], true_obj_list[i], opt_time_list[i], ave_rho_list[i], ave_diameter_list[i], ave_rdnear_list[i]] + init_x_list[i].ravel().tolist() + opt_xs_list[i] + train_rmse + test_rmse + [learing_time] for i in val_list]

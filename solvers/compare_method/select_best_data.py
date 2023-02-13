@@ -1,7 +1,7 @@
 from utility.module import *
 from utility.setting import *
 from experiment.base_opt import *
-from optimization_methods.base_optimization_method import *
+from solvers.base_optimization_method import *
 
 class SelectBestData(BaseOptimizationMethod):
     def optimize(self, fs, new_s, init_x):

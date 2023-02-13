@@ -1,5 +1,5 @@
 from utility.setting import *
-from optimization_methods.base_optimization_method import *
+from solvers.base_optimization_method import *
 from utility.module import environment
 
 class MathmaticalOptimization(BaseOptimizationMethod):
