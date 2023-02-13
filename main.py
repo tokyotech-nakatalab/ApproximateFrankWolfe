@@ -59,6 +59,7 @@ def main():
                                                         best_x, best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear = solver.optimize(fs, S_optval[g.val], init_x)
                                                         # best_obj, best_true_obj = min2plus(best_obj), min2plus(best_true_obj)
                                                         opt_time_list.append(toc())
+                                                        print(f"合計時間：{opt_time_list[-1]}, サーチとフィット：{g.search_time/opt_time_list[-1]}%, 最適化：{g.solve_time/opt_time_list[-1]}")
                                                         opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list = add_result(opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list, best_x, S_optval[g.val], best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear)
                                                     print_output(X_init, opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list)
                                                     output_result(X_init, opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list, opt_time_list, train_rmse, test_rmse, learing_time)

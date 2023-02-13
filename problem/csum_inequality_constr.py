@@ -56,7 +56,7 @@ class CSumInequalityConstrProblem(BaseProblem):
                 j, k = cons[0], cons[1]
                 model.addConstr(X[i][j] + X[i][k] <= self.min_constr[j][k])
 
-        return self.do_optimize(model, X, C, g.n_item)
+        return self.do_optimize(model, X, C)
 
 
     def modlize_casadi_problem(self, fs, s, prev_x=None):

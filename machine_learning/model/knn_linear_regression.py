@@ -10,9 +10,6 @@ class MyKnnLinearRegression(BaseMyModel):
         super().__init__(i)
         self.name = LINEARREGRESSION
         self.mdl = LinearRegression()
-        # self.prev_idx = None
-        # self.kaburi_cnt = 0
-        # self.th_cnt = 1
 
     def set_data(self, x, y):
         self.x = x
@@ -22,29 +19,15 @@ class MyKnnLinearRegression(BaseMyModel):
 
     def fit_xk(self, x_k):
         nearest_idx, distances = self.knn.predict(x_k, g.n_nearest)
-        # stop_flg = False
-        # if self.prev_idx is not None:
-        #     n_kaburi = len([1 for i in range(g.n_nearest) if self.prev_idx[i] == nearest_idx[i]])
-        #     # print(n_kaburi)
-        #     if n_kaburi / g.n_nearest >= 0.9:
-        #         self.kaburi_cnt += 1
-        #     else:
-        #         self.kaburi_cnt = 0
-        #     stop_flg = self.kaburi_cnt == self.th_cnt
-        # self.prev_idx = nearest_idx
         nearest_x_list = self.x[nearest_idx]
         # u, s, vh = svd(nearest_x_list)
         average_x = np.mean(nearest_x_list, 0)
         u, s, vh = svd(nearest_x_list-average_x)
-        print(f"最小特異値:{np.min(s)}")
+        # print(f"最小特異値:{np.min(s)}")
         min_s = np.min(s)
         min_s = 1 / min_s
-        if min_s is np.nan:
-            print("ddd")
-        # diam = calc_diameter(nearest_x_list)
-        # diam = random_sample_distance(nearest_x_list)
         diam = np.max(distances)
-        print(f"平均距離:{diam}")
+        # print(f"平均距離:{diam}")
 
         self.mdl.fit(nearest_x_list, self.y[nearest_idx])
         return distances, min_s, diam
