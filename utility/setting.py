@@ -34,6 +34,7 @@ opt_list = [FRANKWOLFE]
 
 # 機械学習手法
 ml_list = [POLYNOMIALREGRESSION, LIGHTGBM, KNNLINEARREGRESSION]
+ml_list = [POLYNOMIALREGRESSION, LIGHTGBM, ANNLINEARREGRESSION]
 # ml_list = [LIGHTGBM, WEIGHTEDLINEARREGRESSION]
 # ml_list = [LIGHTGBM]
 # # # ml_list = [SVRGAUSS]
@@ -183,7 +184,7 @@ min_xs = 0
 max_xs = 10
 problem_list = [INEQUALITYCONSTRAINT]
 # n_nearest_list = list(range(10, 1010, 10))
-n_nearest_best_rate = 0.4
+n_nearest_best_rate = 0.075
 auto_n_nearest = True
 plot_name_dic[(solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
 

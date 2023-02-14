@@ -1,4 +1,3 @@
-from select import select
 from utility.module import *
 from utility.setting import *
 from experiment.base_opt import *
@@ -20,8 +19,7 @@ class FrankWolfe(BaseOptimizationMethod):
         alpha = 0.0
         self.iteration = 0
         history_x, history_y, history_true_y = [], [], []
-        g.search_time = 0
-        g.solve_time = 0
+        g.search_time, g.fit_time, g.svd_time, g.culcd_time, g.modelize_time, g.solve_time = 0, 0, 0, 0, 0, 0
         while True:
             #step2 finish judgement
             if self.judge_finish(user_x, prev_x):
@@ -32,9 +30,7 @@ class FrankWolfe(BaseOptimizationMethod):
             mk = [None] * g.n_item
             for i in range(g.n_item):
                 xs = np.concatenate([user_x[i], new_s[i]], axis=0)
-                tic2()
                 distances, min_rho, diameter = fs[i].fit_xk(xs)
-                g.search_time += toc2()
                 min_rho_list.append(min_rho)
                 diameter_list.append(diameter)
                 rho_diam_near_list.append(diameter**2 * min_rho * np.sqrt(g.n_nearest))
@@ -44,12 +40,10 @@ class FrankWolfe(BaseOptimizationMethod):
 
             if self.iteration != 0:
                 prev_x = np.copy(user_x)
-                tic2()
                 if environment == LOCAL or environment == DOCKER:
                     opt_x, opt_value = self.problem.modlize_gurobi_problem(mk, new_s, prev_x=user_x)
                 elif environment == TSUBAME:
                     opt_x, opt_value = self.problem.modlize_pulp_problem(mk, new_s, prev_x=user_x)
-                g.solve_time += toc2()
                 xs = np.concatenate([user_x, new_s], axis=1)
                 alpha = 2 / (self.iteration + 2 - 1) # 初回に動かない分の補正
                 user_x = user_x + alpha * (opt_x - user_x)

@@ -10,6 +10,7 @@ from solvers.ml_modelize.polynomial_regression import add_polynomial_regression_
 class BaseProblem(BaseOfData):
     def __init__(self) -> None:
         super().__init__()
+        self.first_do = True
 
     def def_minmax(self):
         self.min_bounds = self.data_generator.min_bounds

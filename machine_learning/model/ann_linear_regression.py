@@ -3,6 +3,7 @@ from utility.setting import *
 
 from machine_learning.model.base_model import *
 from machine_learning.tools.ann import *
+from utility.tool import tic2, toc2
 
 class MyAnnLinearRegression(BaseMyModel):
     def __init__(self, i) -> None:
@@ -22,9 +23,29 @@ class MyAnnLinearRegression(BaseMyModel):
         self.ann.fit(x)
 
     def fit_xk(self, x_k):
+        tic2()
         nearest_idx, distances = self.ann.predict(x_k, g.n_nearest)
-        self.mdl.fit(self.x[nearest_idx], self.y[nearest_idx])
-        return distances
+        g.search_time += toc2()
+        nearest_x_list = self.x[nearest_idx]
+        # u, s, vh = svd(nearest_x_list)
+        average_x = np.mean(nearest_x_list, 0)
+        tic2()
+        # u, s, vh = svd(nearest_x_list-average_x)
+        s = -1
+        g.svd_time += toc2()
+        # print(f"最小特異値:{np.min(s)}")
+        min_s = np.min(s)
+        min_s = 1 / min_s
+        tic2()
+        diam = np.max(distances)
+        g.culcd_time += toc2()
+        # print(f"平均距離:{diam}")
+
+        tic2()
+        self.mdl.fit(nearest_x_list, self.y[nearest_idx])
+        g.fit_time += toc2()
+        return distances, min_s, diam
+
 
     def set_parameter(self):
         try:

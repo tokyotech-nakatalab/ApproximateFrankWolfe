@@ -3,9 +3,8 @@ from utility.setting import *
 
 
 def add_linear_regression_constraint(model, f, s, x, c, i=0):
-    model.update()
-    model.addConstr(quicksum(f.coefs[j] * x[j] for j in range(g.n_user_available_x)) + f.ic == c, name = f"f{i}")
-    return model
+    ml_constr = model.addConstr(quicksum(f.coefs[j] * x[j] for j in range(g.n_user_available_x)) + f.ic == c, name = f"f{i}")
+    return model, ml_constr
 
 
 def add_linear_regression_constraint_casadi(model, x, c, f, s):

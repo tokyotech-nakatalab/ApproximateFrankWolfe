@@ -28,8 +28,7 @@ class SimulatedAnnealing(BaseOptimizationMethod):
                     user_x = copy.deepcopy(new_user_x)
                 else:
                     p = np.exp(-(fitness - prev_fitness) / t) # 更新確率計算
-                    print(f"確率{p}")
-                    # p = 0.
+                    # print(f"確率{p}")
                     if np.random.rand() <= p:
                         user_x = copy.deepcopy(new_user_x)
                 prev_fitness = self.evaluate(fs, user_x, new_s)
@@ -38,7 +37,8 @@ class SimulatedAnnealing(BaseOptimizationMethod):
                 print("初回イテレーションでは移動しません")
                 opt_x = None
             self.visualize(fs, self.iteration, user_x, history_x, history_y, history_true_y, opt_x)
-            x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s)
+            x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s, print_flg=False)
+            # x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s)
 
             self.renew_best(x, obj, true_obj)
             self.iteration += 1
