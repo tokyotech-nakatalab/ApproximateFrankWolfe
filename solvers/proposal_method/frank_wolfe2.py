@@ -14,15 +14,16 @@ class FrankWolfe2(BaseOptimizationMethod):
         prev_x = None
 
         min_rho_list, ave_diameter_list, rho_diam_near_list = [], [], []
-
+        g.search_time, g.fit_time, g.svd_time, g.culcd_time, g.modelize_time, g.solve_time = 0, 0, 0, 0, 0, 0
+        self.finish_cnt = 0
         alpha = 0.0
         self.iteration = 0
         history_x, history_y, history_true_y = [], [], []
-        perev_x_list = []
         while True:
             #step2 finish judgement
             if self.judge_finish(user_x, prev_x):
                 break
+            print(f"iteration:{self.iteration}")
 
             #step3 local linear model
             #calc local linear regression ⇒m_k
@@ -45,16 +46,15 @@ class FrankWolfe2(BaseOptimizationMethod):
                     opt_x, opt_value = self.problem.modlize_pulp_problem(mk, new_s, prev_x=user_x)
                 xs = np.concatenate([user_x, new_s], axis=1)
 
-                # alpha = 2 / (self.iteration + 2 - 1) # 初回に動かない分の補正
-                alpha = 1 / (self.iteration + 1000 - 1)
+                alpha = 2 / (self.iteration + 2 - 1) # 初回に動かない分の補正
+                # alpha = 1 / (self.iteration + 1000 - 1)
                 user_x = user_x + alpha * (opt_x - user_x)
             else:
                 print("初回イテレーションでは移動しません")
                 opt_x = None
-            perev_x_list.append(user_x)
-            self.visualize(mk, self.iteration, user_x, history_x, history_y, history_true_y, opt_x)
+            x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s, print_flg=False)
 
-            x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s)
+            # x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s)
             self.renew_best(x, obj, true_obj)
             self.iteration += 1
         ave_rho = sum(min_rho_list) / len(min_rho_list)
@@ -81,3 +81,14 @@ class FrankWolfe2(BaseOptimizationMethod):
         plt.scatter(x, y)
         plt.show()
         plt.close()
+
+    def judge_finish(self, x, prev_x):
+        if prev_x is None:
+            return False
+        dif_sum = np.sum(np.abs(x - prev_x))
+        print(dif_sum)
+        if dif_sum < 0.1:
+            self.finish_cnt += 1
+        else:
+            self.finish_cnt = 0
+        return self.finish_cnt >= 10 or self.iteration > self.max_iteration 

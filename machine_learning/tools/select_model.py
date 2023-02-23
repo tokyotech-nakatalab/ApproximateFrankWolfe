@@ -55,8 +55,12 @@ def select_model(x_train, y_train, i):
 def model_fit(mymdl, x, y, i):
     if not mymdl.is_saved_flg:
         # 学習
-        if g.select_ml == LINEARREGRESSION or g.select_ml == POLYNOMIALREGRESSION:
+        if g.select_ml == LINEARREGRESSION:
             mymdl.fit(x, y)
+        elif g.select_ml == POLYNOMIALREGRESSION:
+            if search_hyper_paramerter:
+                mymdl.grid_search(x, y)
+            mymdl.fit(x, y) 
         elif g.select_ml == SVRLINEAR or g.select_ml == SVRPOLY or g.select_ml == SVRGAUSS:
             # mymdl.bayse_search(x, y)
             if search_hyper_paramerter:

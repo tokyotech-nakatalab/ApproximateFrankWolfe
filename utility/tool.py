@@ -69,6 +69,10 @@ def generate_data_file_name(type, i):
     data_output = g.result_data_dir + "/" + g.data_file_name + "/" + f"i{i}" + f"_{type}"
     return  data_output + ".pkl"
 
+def generate_true_obj_history_file_name(name):
+    model_output = g.result_opt_dir + "/" + g.result_file_name + "_" + name
+    return  model_output + ".png"
+
 
 def generate_base_directory():
     os.makedirs(result_dir, exist_ok=True)

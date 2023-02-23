@@ -1,5 +1,7 @@
 from problem.base_problem import *
 import utility.gloabl_values as g
+from utility.tool import tic2, toc2
+
 
 class CSumNonConstraintProblem(BaseProblem):
     def __init__(self) -> None:
@@ -11,27 +13,39 @@ class CSumNonConstraintProblem(BaseProblem):
         x:1次元, y:1次元の重回帰．が二種類存在．xの総和が10以内で二つの回帰の総和の最大値
         """
 
-        X = {}
-        C = {}
+        tic2()
+        if self.first_do:
+            self.X = {}
+            self.C = {}
+            self.ml_constr = {}
 
-        model = Model(name = "taxi")
-        # 変数の生成
+            self.model = Model(name = "taxi")
+            # 変数の生成
+            for i in range(g.n_item):
+                self.X[i] = {}
+                for j in range(g.n_user_available_x):
+                    self.X[i][j] = self.model.addVar(vtype=GRB.CONTINUOUS, lb=self.min_bounds[i][j], ub=self.max_bounds[i][j], name=f"x{i,j}")
+                self.C[i] = self.model.addVar(vtype=GRB.CONTINUOUS, name=f"c{i}", lb=-np.inf)
+            self.model.update()
+
+
+            # 目的関数を設定
+            self.model.setObjective(quicksum(self.C[i] for i in range(g.n_item)), sense = GRB.MAXIMIZE)
+            self.first_do = False
+        else:
+            for i in range(g.n_item):
+                self.model.remove(self.ml_constr[i])
+
+        # 機械学習に関わる制約
         for i in range(g.n_item):
-            X[i] = {}
-            for j in range(g.n_user_available_x):
-                X[i][j] = model.addVar(vtype=GRB.CONTINUOUS, lb=self.min_bounds[i][j], ub=self.max_bounds[i][j], name=f"x{i,j}")
-            C[i] = model.addVar(vtype=GRB.CONTINUOUS, name=f"c{i}", lb=-np.inf)
+            self.model, self.ml_constr[i] = self.add_constraint_forecast(self.model, fs[i], s[i], self.X[i], self.C[i], index=i)
 
-
-        #機械学習に関わる制約
-        for i in range(g.n_item):
-            model = self.add_constraint_forecast(model, fs[i], s[i], X[i], C[i], index=i)
-
-
-        # 目的関数を設定
-        model.setObjective(quicksum(C[i] for i in range(g.n_item)), sense = GRB.MAXIMIZE)
-
-        return self.do_optimize(model, X, C)
+        g.modelize_time += toc2()
+        tic2()
+        x_opt_list, val_opt = self.do_optimize(self.model, self.X, self.C)
+        g.solve_time += toc2()
+        return x_opt_list, val_opt
+        # return self.do_optimize(model, X, C)
 
 
     def modlize_casadi_problem(self, fs, s, prev_x=None):

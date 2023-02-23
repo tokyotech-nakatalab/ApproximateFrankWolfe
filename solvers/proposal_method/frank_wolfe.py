@@ -20,6 +20,7 @@ class FrankWolfe(BaseOptimizationMethod):
         self.iteration = 0
         history_x, history_y, history_true_y = [], [], []
         g.search_time, g.fit_time, g.svd_time, g.culcd_time, g.modelize_time, g.solve_time = 0, 0, 0, 0, 0, 0
+        g.x_history, g.obj_history, g.true_obj_history, g.dg_history, g.est_dg_history = [], [], [], [], []
         while True:
             #step2 finish judgement
             if self.judge_finish(user_x, prev_x):
@@ -46,6 +47,8 @@ class FrankWolfe(BaseOptimizationMethod):
                     opt_x, opt_value = self.problem.modlize_pulp_problem(mk, new_s, prev_x=user_x)
                 xs = np.concatenate([user_x, new_s], axis=1)
                 alpha = 2 / (self.iteration + 2 - 1) # 初回に動かない分の補正
+                g.dg_history.append()
+                g.est_dg_history.append(mk[0].linear_coef @ opt_x)
                 user_x = user_x + alpha * (opt_x - user_x)
             else:
                 print("初回イテレーションでは移動しません")
@@ -53,6 +56,9 @@ class FrankWolfe(BaseOptimizationMethod):
             # self.visualize(mk, self.iteration, user_x, history_x, history_y, history_true_y, opt_x)
 
             x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s, print_flg=False)
+            g.x_history.append(x)
+            g.obj_history.append(obj)
+            g.true_obj_history.append(true_obj)
             # x, obj, true_obj = self.evaluate_result(self.problem, fs, user_x, new_s)
             self.renew_best(x, obj, true_obj)
             self.iteration += 1

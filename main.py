@@ -59,7 +59,8 @@ def main():
                                                         best_x, best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear = solver.optimize(fs, S_optval[g.val], init_x)
                                                         # best_obj, best_true_obj = min2plus(best_obj), min2plus(best_true_obj)
                                                         opt_time_list.append(toc())
-                                                        print(f"合計時間：{opt_time_list[-1]}, サーチ：{g.search_time/opt_time_list[-1]}%, フィット：{g.fit_time/opt_time_list[-1]}%, 特異値計算：{g.svd_time/opt_time_list[-1]}, D計算:{g.culcd_time/opt_time_list[-1]}, モデリング:{g.modelize_time/opt_time_list[-1]}%, 最適化：{g.solve_time/opt_time_list[-1]}%")
+                                                        if g.select_opt == FRANKWOLFE:
+                                                            plot_history(opt_time_list)
                                                         opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list = add_result(opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list, best_x, S_optval[g.val], best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear)
                                                     print_output(X_init, opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list)
                                                     output_result(X_init, opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list, opt_time_list, train_rmse, test_rmse, learing_time)
@@ -134,23 +135,26 @@ def experiment_real_data():
     print(result_list)
 
 
-    # g.n_item, g.select_opt, g.select_problem, g.select_data_type, g.n_feature, g.n_user_available_x, g.select_ml = 1, FRANKWOLFE, REALCONSTRAINT, REAL, 3, 3, KNNLINEARREGRESSION
-    # result_list = []
-    # for g.n_nearest in kouho_list:
-    #     f = MyKnnLinearRegression(0)
-    #     f.set_data(x, y)
-    #     fs = [f]
-    #     solver = select_opt_problem()
-    #     solver.set_problem()
-    #     init_x = np.array([[0, 0, 0]])
-    #     best_x, best_obj, best_true_obj, ave_rho, ave_diameter = solver.optimize(fs,np.array([[]]), init_x)
-    #     print(best_x, best_obj, best_true_obj, ave_rho, ave_diameter)
-    #     result_list.append([best_x, best_obj, best_true_obj, ave_rho, ave_diameter])
-    # x_list = [result_list[i][0][0] for i in range(len(result_list))]
-    # df = pd.DataFrame(x_list)
-    # df.to_csv("./resulttt.csv")
-    # print("***************************")
-    # print(result_list)
+def plot_history(opt_time_list):
+    x_dif_amount = [np.sum(np.abs(g.x_history[i+1] - g.x_history[i])) for i in range(len(g.x_history)-1)]
+    plt.scatter(range(len(x_dif_amount)), np.array(x_dif_amount), s=1)
+    plt.xlabel("反復回数", fontname="MS Gothic")
+    plt.ylabel("解の差の大きさ", fontname="MS Gothic")
+    plt.savefig(generate_true_obj_history_file_name("x"))
+    plt.close()
+
+    plt.scatter(range(len(g.obj_history)), -1 * np.array(g.obj_history), s=1)
+    plt.xlabel("反復回数", fontname="MS Gothic")
+    plt.ylabel("関数値", fontname="MS Gothic")
+    plt.savefig(generate_true_obj_history_file_name("obj"))
+    plt.close()
+
+    plt.scatter(range(len(g.true_obj_history)), -1 * np.array(g.true_obj_history), s=1)
+    plt.xlabel("反復回数", fontname="MS Gothic")
+    plt.ylabel("関数値", fontname="MS Gothic")
+    plt.savefig(generate_true_obj_history_file_name("true"))
+    plt.close()
+    print(f"合計時間：{opt_time_list[-1]}, サーチ：{g.search_time/opt_time_list[-1]}%, フィット：{g.fit_time/opt_time_list[-1]}%, 特異値計算：{g.svd_time/opt_time_list[-1]}, D計算:{g.culcd_time/opt_time_list[-1]}, モデリング:{g.modelize_time/opt_time_list[-1]}%, 最適化：{g.solve_time/opt_time_list[-1]}%")
 
 
 
