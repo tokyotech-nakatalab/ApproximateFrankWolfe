@@ -5,14 +5,14 @@ class CSumInequalityConstrProblem(BaseProblem):
     def __init__(self) -> None:
         super().__init__()
         if g.n_feature == 10:
-            self.M = 30
+            self.M = 45
         elif g.n_feature == 30:
             self.M = 100
         self.constr = [5, 2, 3, 7, 10, 4, 7, 3, 1, 5]
         # self.constr = [7, 14, 11, 7, 9, 13, 7, 6, 8, 9]
         # self.constr = [7, 14, 11, 7, 9, 13, 7, 15, 8, 9]
         self.constr = [12] * g.n_feature
-        # self.constr = [9] * 10
+        self.constr = [8] * 10
         self.min_constr = [[min(self.constr[i], self.constr[j]) for i in range(len(self.constr))] for j in range(len(self.constr))]
         
         if g.n_feature == 10:

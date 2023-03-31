@@ -35,6 +35,10 @@ REAL = 8
 RASTRIGIN = 9
 LOGX = 10
 LOGX2 = 11
+GOLDSTEINPRICE = 12
+BOOTH = 13
+EASOM = 14
+BEALE = 15
 
 #Opt Method
 MATHMATICALOPTIMIZATION = 0
@@ -71,8 +75,8 @@ DOCKER = "docker"
 mlmodel_names = {LINEARREGRESSION: "lr", RANDOMFOREST: "rf", SVRLINEAR: "sl", SVRPOLY: "sp", SVRGAUSS: "sg", CGA2M:"c2", LIGHTGBM: "lg", NEURALNETWORK: "nn", WEIGHTEDLINEARREGRESSION: "wl",
                  ANNLINEARREGRESSION: "al", KNNLINEARREGRESSION: "kl", POLYNOMIALREGRESSION: "pr", GAUSSIANPROCESSREGRESSION: "gp"}
 problem_names = {NONCONSTRAINT: "non-constraint", BOXCONSTRAINT: "box-constraint", BOXFEATURECONSTRAINT: "box-feature-constraint", DISKCONSTRAINT: "disk-constraint", INEQUALITYCONSTRAINT: "inequality-constraint"}
-data_type_names = {COMPLEX7: "complex7", SINX0: "sinx0", SINX0MOUNT2: "sinx0mount2", ROSENBROCK: "rosenbrock", ACKELY: "ackely", XSQUARE: "xsquare", 
-                   SINX01MOUNT2: "sinx01mount2", MOUNT2: "mount2", RASTRIGIN: "rastrigin", LOGX: "logx", LOGX2: "logx2"}
+data_type_names = {COMPLEX7: "complex7", SINX0: "sinx0", SINX0MOUNT2: "sinx0mount2", ROSENBROCK: "rosenbrock", ACKELY: "ackely", XSQUARE: "xsquare", GOLDSTEINPRICE: "goldstein", BOOTH: "booth", EASOM: "easom",
+                   BEALE: "beale", SINX01MOUNT2: "sinx01mount2", MOUNT2: "mount2", RASTRIGIN: "rastrigin", LOGX: "logx", LOGX2: "logx2"}
 solvers_names = {SIMULATEDANNEALING: "SimulatedAnnealing", TRUSTREGION: "TrustRegion", MATHMATICALOPTIMIZATION: "MathmaticalOptimization", FRANKWOLFE: "FrankWolfe",
                               STEPDISTANCE: "StepDistance", BAYESIANOPTIMIZATIONMU: "BayesianOptimizationMu", BAYESIANOPTIMIZATIONLCB: "BayesianOptimizationLcb",
                               SELECTBESTDATA: "SelectBestData", FRANKWOLFE2: "FrankWolfe2"}
@@ -149,4 +153,4 @@ plot_name_dic = {
 }
 
 # plot rate
-plot_colormap_rate_dic = {SINX0: 10, SINX0MOUNT2: 10, SINX01MOUNT2: 10, ROSENBROCK: 10, ACKELY: 1.5, XSQUARE: 10, MOUNT2: 10}
+plot_colormap_rate_dic = {SINX0: 10, SINX0MOUNT2: 10, SINX01MOUNT2: 10, ROSENBROCK: 10, ACKELY: 1.5, XSQUARE: 10, MOUNT2: 10, GOLDSTEINPRICE: 10, BOOTH: 10, EASOM: 10, BEALE: 10}

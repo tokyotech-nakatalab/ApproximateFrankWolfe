@@ -13,10 +13,18 @@ class BaseOfData():
             self.data_generator = SinX01Mount2()
         elif g.select_data_type == ROSENBROCK:
             self.data_generator = RosenBrock()
+        elif g.select_data_type == GOLDSTEINPRICE:
+            self.data_generator = GoldsteinPrice()
         elif g.select_data_type == ACKELY:
             self.data_generator = Ackley()
         elif g.select_data_type == XSQUARE:
             self.data_generator = XSquare()
+        elif g.select_data_type == BOOTH:
+            self.data_generator = Booth()
+        elif g.select_data_type == EASOM:
+            self.data_generator = Easom()
+        elif g.select_data_type == BEALE:
+            self.data_generator = Beale()
         elif g.select_data_type == COMPLEX7:
             self.data_generator = Complex7()
         elif g.select_data_type == MOUNT2:
@@ -69,9 +77,27 @@ class BaseOfData():
                             break
 
         else: # 一様分布でサンプリング
-            sample = np.random.random_sample((n, g.n_user_available_x))
+            sample = np.zeros((n, g.n_user_available_x))
             for j in g.user_available_x:
-                sample[:, j] = (self.max_bounds[i][j] - self.min_bounds[i][j]) * sample[:, j] + self.min_bounds[i][j]
+                sam = np.random.uniform(size = n)
+                sample[:, j] = (self.max_bounds[i][j] - self.min_bounds[i][j]) * sam + self.min_bounds[i][j]
+                # if self.check_penalty(sample[:, j], i, j):
+                #     print("error")
+                #     exit()
+
+            # for j in g.user_available_x:
+            #     for k in range(n):
+            #         while True:
+            #             sam = np.random.normal(loc = self.data_generator.x_ast[j], scale = x_scale, size = 1)
+                #         sam = (self.max_bounds[i][j] - self.min_bounds[i][j]) * np.random.random_sample(g.n_user_available_x) + self.min_bounds[i][j]
+                #         if not self.check_penalty(sample[:, j], k, j):
+                #             sample[k, j] = sam
+                #             break
+                #     sample[k, j] = (self.max_bounds[i][j] - self.min_bounds[i][j]) * sample[k, j] + self.min_bounds[i][j]
+                # sample[:, j] = (self.max_bounds[i][j] - self.min_bounds[i][j]) * sample[:, j] + self.min_bounds[i][j]
+                # if self.check_penalty(sample[:, j], i, j):
+                #     print("error")
+                #     exit()
         return sample
 
     def generate_s(self, i, n):

@@ -20,6 +20,14 @@ class BaseDataGeneration():
         x[x < 0] = x[x < 0] * self.min_rates[i][x < 0]
         x[x > 0] = x[x > 0] * self.max_rates[i][x > 0]
         return x
+    
+    def re_adjust_x(self, x, i):
+        try:
+            x[x < 0] = x[x < 0] / self.min_rates[i][x < 0]
+            x[x > 0] = x[x > 0] / self.max_rates[i][x > 0]
+        except:
+            pass
+        return x
 
     def noise(self, x):
         return np.random.normal(loc=0, scale=self.noises[g.noise_sigma], size=1).item()
@@ -164,22 +172,81 @@ class Mount2(BaseDataGeneration):
 
 class RosenBrock(BaseDataGeneration):
     def true_func(self, x, i=0):
-        x = self.adjust_x(x, 0)
-        return -1 *((1 - x[0])**2 + 100 * ((x[1] - x[0]**2)**2))
+        # x = self.adjust_x(x, 0)
+        ans = 0
+        for j in range(x.size-1):
+            ans += 100 * (x[j+1] - x[j]**2)**2 + (x[j] - 1)**2
+        return -ans
+    
+    def set_x_ast(self):
+        self.x_ast = [1.] * g.n_feature
 
     def feature_bounds(self):
-        self.original_min_bounds = np.array([[-1.5] * g.n_feature for _ in range(g.n_item)])
-        self.original_max_bounds = np.array([[1.5] * g.n_feature for _ in range(g.n_item)])
-        self.min_bounds = np.array([[min_xs] * g.n_feature for _ in range(g.n_item)])
-        self.max_bounds = np.array([[max_xs] * g.n_feature for _ in range(g.n_item)])
-        self.min_rates = np.abs(self.original_min_bounds / min_xs)
-        self.max_rates = np.abs(self.original_max_bounds / max_xs)
+        self.min_bounds = [[min_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+        self.max_bounds = [[max_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+
+    # def feature_bounds(self):
+    #     self.original_min_bounds = np.array([[-5] * g.n_feature for _ in range(g.n_item)])
+    #     self.original_max_bounds = np.array([[5] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_bounds = np.array([[min_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.max_bounds = np.array([[max_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_rates = np.abs(self.original_min_bounds / min_xs)
+    #     self.max_rates = np.abs(self.original_max_bounds / max_xs)
+
+
+class GoldsteinPrice(BaseDataGeneration):
+    def true_func(self, x, i=0):
+        # x = self.adjust_x(x, 0)
+        ans = 0
+        for j in range(x.size//2):
+            ans += (1 + (x[2*j] + x[2*j+1] + 1)**2 * (19 - 14*x[2*j] + 3*(x[2*j]**2) - 14*x[2*j+1] + 6*x[2*j]*x[2*j+1] + 3*(x[2*j+1]**2))) * (30 + (2*x[2*j] - 3*x[2*j+1])**2 * (18 - 32*x[2*j] + 12*(x[2*j]**2) + 48*x[2*j+1] - 36*x[2*j]*x[2*j+1] + 27*(x[2*j+1]**2)))
+        return -ans
+    
+    def set_x_ast(self):
+        self.x_ast = [0., -1.] * (g.n_feature//2)
+
+    def feature_bounds(self):
+        self.min_bounds = [[min_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+        self.max_bounds = [[max_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+
+
+class Booth(BaseDataGeneration):
+    def true_func(self, x, i=0):
+        # x = self.adjust_x(x, 0)
+        ans = 0
+        for j in range(x.size//2):
+            ans += (x[2*j] + 2*x[2*j+1] - 7)**2 + (2*x[2*j] + x[2*j+1] - 5)**2
+        return -ans / 1000
+    
+    def set_x_ast(self):
+        self.x_ast = [1., 3.] * (g.n_feature//2)
+
+    def feature_bounds(self):
+        self.min_bounds = [[min_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+        self.max_bounds = [[max_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+
+
+class Easom(BaseDataGeneration):
+    def true_func(self, x, i=0):
+        # x = self.adjust_x(x, 0)
+        ans = 0
+        for j in range(x.size//2):
+            ans += -np.cos(x[2*j]) * np.cos(x[2*j+1]) * np.exp(-((x[2*j] - np.pi)**2 + (x[2*j+1] - np.pi)**2))
+        return -ans
+    
+    def set_x_ast(self):
+        self.x_ast = [np.pi, np.pi] * (g.n_feature//2)
+
+    def feature_bounds(self):
+        self.min_bounds = [[min_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+        self.max_bounds = [[max_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+
 
 
 class Ackley(BaseDataGeneration):
     def true_func(self, x, i=0):
         base = 20
-        x = self.adjust_x(x, i)
+        # x = self.adjust_x(x, i)
         t1 = base
         t2 = - base * np.exp(- 0.2 * np.sqrt(1.0 / g.n_feature * np.sum(x ** 2)))
         t3 = np.e
@@ -190,17 +257,21 @@ class Ackley(BaseDataGeneration):
         self.x_ast = [0.] * g.n_feature 
 
     def feature_bounds(self):
-        self.original_min_bounds = np.array([[-32.768] * g.n_feature for _ in range(g.n_item)])
-        self.original_max_bounds = np.array([[32.768] * g.n_feature for _ in range(g.n_item)])
-        self.min_bounds = np.array([[min_xs] * g.n_feature for _ in range(g.n_item)])
-        self.max_bounds = np.array([[max_xs] * g.n_feature for _ in range(g.n_item)])
-        self.min_rates = np.abs(self.original_min_bounds / min_xs)
-        self.max_rates = np.abs(self.original_max_bounds / max_xs)
+        self.min_bounds = [[min_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+        self.max_bounds = [[max_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+
+    # def feature_bounds(self):
+    #     self.original_min_bounds = np.array([[-32.768] * g.n_feature for _ in range(g.n_item)])
+    #     self.original_max_bounds = np.array([[32.768] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_bounds = np.array([[min_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.max_bounds = np.array([[max_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_rates = np.abs(self.original_min_bounds / min_xs)
+    #     self.max_rates = np.abs(self.original_max_bounds / max_xs)
 
 
 class Rastrigin(BaseDataGeneration):
     def true_func(self, x, i=0):
-        x = self.adjust_x(x, i)
+        # x = self.adjust_x(x, i)
         ans = 10 * g.n_feature + np.sum(x**2 - 10 * np.cos(2*np.pi*x))
         return -1 * ans
 
@@ -208,12 +279,39 @@ class Rastrigin(BaseDataGeneration):
         self.x_ast = [0.] * g.n_feature 
 
     def feature_bounds(self):
-        self.original_min_bounds = np.array([[-5.12] * g.n_feature for _ in range(g.n_item)])
-        self.original_max_bounds = np.array([[5.12] * g.n_feature for _ in range(g.n_item)])
-        self.min_bounds = np.array([[min_xs] * g.n_feature for _ in range(g.n_item)])
-        self.max_bounds = np.array([[max_xs] * g.n_feature for _ in range(g.n_item)])
-        self.min_rates = np.abs(self.original_min_bounds / min_xs)
-        self.max_rates = np.abs(self.original_max_bounds / max_xs)
+        self.min_bounds = [[min_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+        self.max_bounds = [[max_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+
+    # def feature_bounds(self):
+    #     self.original_min_bounds = np.array([[-5.12] * g.n_feature for _ in range(g.n_item)])
+    #     self.original_max_bounds = np.array([[5.12] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_bounds = np.array([[min_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.max_bounds = np.array([[max_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_rates = np.abs(self.original_min_bounds / min_xs)
+    #     self.max_rates = np.abs(self.original_max_bounds / max_xs)
+
+class Beale(BaseDataGeneration):
+    def true_func(self, x, i=0):
+        # x = self.adjust_x(x, i)
+        ans = 0
+        for j in range(x.size//2):
+            ans += (1.5 - x[2*j] + x[2*j] * x[2*j+1])**2 + (2.25 - x[2*j] + x[2*j] * (x[2*j+1] ** 2))**2 + (2.625 - x[2*j] + x[2*j] * (x[2*j+1]**3))**2
+        return -ans
+
+    def set_x_ast(self):
+        self.x_ast = [3.0, 0.5] * (g.n_feature//2)
+
+    # def feature_bounds(self):
+    #     self.original_min_bounds = np.array([[-4.5] * g.n_feature for _ in range(g.n_item)])
+    #     self.original_max_bounds = np.array([[4.5] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_bounds = np.array([[min_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.max_bounds = np.array([[max_xs] * g.n_feature for _ in range(g.n_item)])
+    #     self.min_rates = np.abs(self.original_min_bounds / min_xs)
+    #     self.max_rates = np.abs(self.original_max_bounds / max_xs)
+
+    def feature_bounds(self):
+        self.min_bounds = [[min_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
+        self.max_bounds = [[max_xs for _ in range(g.n_feature)] for __ in range(g.n_item)]
 
 
 class Complex7(BaseDataGeneration):
@@ -250,5 +348,15 @@ class AdvertisingData(BaseDataGeneration):
     def feature_bounds(self):
         self.original_min_bounds = np.array([[0, 0, 0]])
         self.original_max_bounds = np.array([[218.45, 36.55, 45.1]])
+        self.min_bounds = self.original_min_bounds
+        self.max_bounds = self.original_max_bounds
+
+class AdvertisingData(BaseDataGeneration):
+    def set_x_ast(self):
+        self.x_ast = [0] * g.n_feature
+
+    def feature_bounds(self):
+        self.original_min_bounds = np.array([[0.62, 514.5, 245, 110.25, 3.5, 2, 0, 0]])
+        self.original_max_bounds = np.array([[0.98, 808.5, 416.5, 220.5, 7, 5, 0.4, 5]])
         self.min_bounds = self.original_min_bounds
         self.max_bounds = self.original_max_bounds

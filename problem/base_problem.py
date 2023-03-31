@@ -143,6 +143,7 @@ class BaseProblem(BaseOfData):
             return add_linear_regression_constraint_pulp(model, x, c, f, s)
 
     def check_penalty(self, x):
+        x = self.data_generator.re_adjust_x(x, 0)
         penalty = self.penalty_constraint(x)
         if np.sum(penalty) != 0:
             return False

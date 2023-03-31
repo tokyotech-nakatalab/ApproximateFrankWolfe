@@ -120,7 +120,7 @@ only_appropriate_feature = False # 無駄な特徴量の存在するパターン
 random_initialize_x = False # ランダムに初期解を選ぶか．Falseなら最もデータ点が高い位置からスタート
 is_plot_proposed_method = False # 提案手法の特性についてプロットするか
 force_minimize = True # 強制的に最小化問題に結果を置き換えるか
-use_real_data = False # 広告データを使うか否か
+use_real_data = False # 現実データを使うか否か
 is_x_normal = True # xを正規分布に従って発生させるか
 visualize_optimization_process_status = DONTSEE # 最適化途中の可視化
 auto_n_nearest = False
@@ -147,69 +147,89 @@ x_scale = 1
 n_nearest_best_rate = 0.4
 
 
-#実験1
+# # 実験1
 # zikken_id = 1
-# already_optimize_ok = False # 最適化を再度行うか
+# already_optimize_ok = True # 最適化を再度行うか
 # n_data_list = [1000]
 # n_feature_list = [10]
 # n_nearest_list = list(range(10, 1010, 10))
 # # n_nearest_list = [10]
 # auto_n_nearest = False
-# is_x_normal = True # xを正規分布に従って発生させるか
-# x_scale = 3
-# is_taisu = True
-# opt_list = [FRANKWOLFE, SELECTBESTDATA]
-# opt_list = [FRANKWOLFE]
-# data_type_list = [XSQUARE]
-# plot_name_dic[(solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
-
-# 実験1.5
-zikken_id = 2
-already_optimize_ok = True # 最適化を再度行うか
-n_data_list = [100, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
-n_data_list = [100, 500, 1000, 1500, 2000, 2500]
-# n_data_list = [2500]
-n_feature_list = [10]
-is_x_normal = False # xを正規分布に従って発生させるか
-opt_list = [FRANKWOLFE, SIMULATEDANNEALING] # SELECTBESTDATA]
-opt_list = [FRANKWOLFE, FRANKWOLFE2, SIMULATEDANNEALING, MATHMATICALOPTIMIZATION, SELECTBESTDATA]
-# opt_list = [FRANKWOLFE]
-# opt_list = [FRANKWOLFE2]
-# opt_list = [SIMULATEDANNEALING]
-# opt_list = [MATHMATICALOPTIMIZATION]
-# opt_list = [SELECTBESTDATA]
-ml_list = [POLYNOMIALREGRESSION, LIGHTGBM, KNNLINEARREGRESSION]
-# ml_list = [POLYNOMIALREGRESSION]
-# ml_list = [LIGHTGBM, KNNLINEARREGRESSION]
-data_type_list = [LOGX]
-g.coef = 10
-# data_type_list = [LOGX2]
-min_xs = 0
-max_xs = 10
-problem_list = [INEQUALITYCONSTRAINT]
-# n_nearest_list = list(range(10, 1010, 10))
-n_nearest_best_rate = 0.4
-auto_n_nearest = True
-plot_name_dic[(solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法(1000反復)"
-plot_name_dic[(solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法(終了条件有)"
-
-#実験2
-# zikken_id = 2
-# already_optimize_ok = True # 最適化を再度行うか
-# n_data_list = [1000]
-# # n_data_list = [200]
-# n_feature_list = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
-# # n_feature_list = [10]
 # is_x_normal = False # xを正規分布に従って発生させるか
 # x_scale = 3
-# opt_list = [MATHMATICALOPTIMIZATION, SIMULATEDANNEALING, FRANKWOLFE, SELECTBESTDATA]
-# opt_list = [MATHMATICALOPTIMIZATION, FRANKWOLFE, FRANKWOLFE2, SELECTBESTDATA]
-# data_type_list = [SINX0MOUNT2]
-# data_type_list = [ACKELY]
-# data_type_list = [RASTRIGIN]
-# # data_type_list = [XSQUARE]
-# auto_n_nearest = True
+# is_taisu = True
+# opt_list = [FRANKWOLFE2, SELECTBESTDATA]
+# opt_list = [FRANKWOLFE2]
+# data_type_list = [XSQUARE]
+# plot_name_dic[(solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
 
+# 実験1.5
+# zikken_id = 2
+# already_optimize_ok = True # 最適化を再度行うか
+# n_data_list = [100, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+# n_data_list = [100, 500, 1000, 1500, 2000, 2500]
+# # n_data_list = [2500]
+# n_feature_list = [10]
+# is_x_normal = False # xを正規分布に従って発生させるか
+# opt_list = [FRANKWOLFE, SIMULATEDANNEALING] # SELECTBESTDATA]
+# opt_list = [FRANKWOLFE2, SIMULATEDANNEALING, MATHMATICALOPTIMIZATION, SELECTBESTDATA]
+# # opt_list = [FRANKWOLFE]
+# opt_list = [FRANKWOLFE2]
+# # opt_list = [SIMULATEDANNEALING]
+# # opt_list = [MATHMATICALOPTIMIZATION]
+# # opt_list = [SELECTBESTDATA]
+# ml_list = [POLYNOMIALREGRESSION, LIGHTGBM, KNNLINEARREGRESSION]
+# # ml_list = [POLYNOMIALREGRESSION]
+# # ml_list = [LIGHTGBM, KNNLINEARREGRESSION]
+# data_type_list = [LOGX]
+# g.coef = 10
+# # data_type_list = [LOGX2]
+# min_xs = 0
+# max_xs = 10
+# problem_list = [INEQUALITYCONSTRAINT]
+# # n_nearest_list = list(range(10, 1010, 10))
+# n_nearest_best_rate = 0.1
+# auto_n_nearest = True
+# plot_name_dic[(solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法(1000反復)"
+# plot_name_dic[(solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
+# color_dic[(solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION])] = "blue"
+
+# #実験2
+zikken_id = 2
+already_optimize_ok = False # 最適化を再度行うか
+n_data_list = [1000]
+# n_data_list = [200]
+n_nearest_best_rate = 0.12
+n_data_list = [500, 1000, 1500, 2000, 2500] #, 3000, 3500, 4000, 4500, 5000]
+# n_feature_list = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+n_feature_list = [10]
+n_feature_list = [50]
+# n_feature_list = [10, 20, 30, 40, 50]
+is_x_normal = False # xを正規分布に従って発生させるか
+x_scale = 3
+# problem_list = [INEQUALITYCONSTRAINT]
+ml_list = [POLYNOMIALREGRESSION, LIGHTGBM, KNNLINEARREGRESSION]
+opt_list = [MATHMATICALOPTIMIZATION, SIMULATEDANNEALING, FRANKWOLFE2, SELECTBESTDATA]
+# opt_list = [FRANKWOLFE2, SELECTBESTDATA]
+# opt_list = [SELECTBESTDATA]
+data_type_list = [SINX0MOUNT2]
+# data_type_list = [ACKELY]
+data_type_list = [RASTRIGIN]
+# data_type_list = [ROSENBROCK]
+# data_type_list = [XSQUARE]
+data_type_list = [GOLDSTEINPRICE]
+# data_type_list = [BOOTH]
+# data_type_list = [EASOM]
+# data_type_list = [BEALE]
+data_type_list = [XSQUARE]
+auto_n_nearest = True
+plot_name_dic[(solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION])] = "提案手法"
+
+
+#実験3
+# zikken_id = 3
+# min_xs = 0
+# max_xs = 300
 
 #Directory
 home_dir = "./"
@@ -234,21 +254,21 @@ constr_ml_for_opt = {SIMULATEDANNEALING: [NEURALNETWORK, LIGHTGBM], TRUSTREGION:
                      FRANKWOLFE2: [KNNLINEARREGRESSION]}
 
 """ 問題+データタイプ オート設定モード"""
-constr_problem_data_for_opt = {NONCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2, RASTRIGIN, LOGX, LOGX2], 
-                               BOXCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2],
-                               BOXFEATURECONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2], 
-                               DISKCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2],
-                               INEQUALITYCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2, LOGX, LOGX2]
+constr_problem_data_for_opt = {NONCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2, RASTRIGIN, LOGX, LOGX2, BOOTH, GOLDSTEINPRICE, EASOM, BEALE], 
+                               BOXCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2, GOLDSTEINPRICE, BOOTH, EASOM, BEALE],
+                               BOXFEATURECONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2, GOLDSTEINPRICE, BOOTH, EASOM, BEALE], 
+                               DISKCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, XSQUARE, MOUNT2, GOLDSTEINPRICE, BOOTH, EASOM, BEALE],
+                               INEQUALITYCONSTRAINT: [SINX0, SINX0MOUNT2, SINX01MOUNT2, COMPLEX7, ROSENBROCK, ACKELY, RASTRIGIN, XSQUARE, MOUNT2, LOGX, LOGX2, GOLDSTEINPRICE, BOOTH, EASOM, BEALE]
                             }
 
 """ 問題+特徴量数　オート設定モード"""
 bad_constr_problem_ufeature_for_opt = {NONCONSTRAINT: [], BOXCONSTRAINT: [], BOXFEATURECONSTRAINT: [1], DISKCONSTRAINT: [], INEQUALITYCONSTRAINT: []}
 
 """ データタイプ+特徴量数　オート設定モード"""
-bad_constr_data_feature_for_opt = {SINX0: [], SINX0MOUNT2: [], SINX01MOUNT2: [], COMPLEX7: list(range(1, 7)), ROSENBROCK: [1], ACKELY: [1], XSQUARE: [], MOUNT2: [], RASTRIGIN: [], LOGX: [], LOGX2: []}
+bad_constr_data_feature_for_opt = {SINX0: [], SINX0MOUNT2: [], SINX01MOUNT2: [], COMPLEX7: list(range(1, 7)), ROSENBROCK: [1], GOLDSTEINPRICE: [1], BOOTH: [1], EASOM: [1], ACKELY: [1], BEALE: [1], XSQUARE: [], MOUNT2: [], RASTRIGIN: [], LOGX: [], LOGX2: []}
 
 """ データタイプ+特徴量数　オート設定モード"""
-appropriate_data_feature_for_opt = {SINX0: [2], SINX0MOUNT2: [2], SINX01MOUNT2: [2], COMPLEX7: [7], ROSENBROCK: [2], ACKELY: [2], XSQUARE: [2], MOUNT2:[2]}
+appropriate_data_feature_for_opt = {SINX0: [2], SINX0MOUNT2: [2], SINX01MOUNT2: [2], COMPLEX7: [7], ROSENBROCK: [2], GOLDSTEINPRICE: [2], BOOTH: [2], EASOM: [2], BEALE: [2], ACKELY: [2], XSQUARE: [2], MOUNT2:[2]}
 
 """ 数理計画法の定式化"""
 formalization_ml_problem = {LINEARREGRESSION: LP, WEIGHTEDLINEARREGRESSION: LP, RANDOMFOREST: MIP, LIGHTGBM: MIP, SVRLINEAR: LP, SVRPOLY: NLP, SVRGAUSS: NLP,

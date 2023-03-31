@@ -188,6 +188,8 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
         fig, ax1 = plt.subplots(1,1,figsize=(10,8))
         x_zahyo = [i for i in range(len(compare_list))]
 
+        all_ave_list = []
+        index_list = []
         for key in result_dic_for_plot.keys():
             objs = np.array(result_dic_for_plot[key])
             present_id = list(range(objs.shape[1]))
@@ -204,6 +206,9 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
             else:
                 x_zahyo_adjust = np.array(x_zahyo) + plot_coordinate_dic[key]
             ax1.errorbar(x_zahyo_adjust[present_id], ave_obj[present_id], yerr = std_obj[present_id], capsize=5, fmt='o', markersize=4, label=plot_name_dic[key], color=color_dic[key])
+            all_ave_list.append(list(ave_obj))
+            index_list.append(plot_name_dic[key])
+        pd.DataFrame(all_ave_list, index=index_list, columns=[f"{c}" for c in compare_list]).to_csv(g.compare_target_dir + f"/obj_s{g.seed}_I{g.n_item}_d{g.n_feature}_dx{g.n_user_available_x}_ns{g.noise_sigma}_da{g.n_data}_ne{g.n_nearest}_all_ave.csv")
         if n_yokoziku > 10:
             ax1.tick_params(labelsize=fontsize_memori)
         else:
@@ -248,6 +253,7 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
                 x_zahyo_adjust = np.array(x_zahyo) + plot_coordinate_dic[key]
             ax1.errorbar(x_zahyo_adjust[present_id], ave_time[present_id], yerr = std_time[present_id], capsize=5, fmt='o', markersize=4, label=plot_name_dic[key], color=color_dic[key])
 
+        # ax1.set_ylim(-0.1, 2.0)
         if n_yokoziku > 10:
             ax1.tick_params(labelsize=fontsize_memori)
         else:
@@ -274,7 +280,7 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
         # rho
         ######################################################################################
         if zikken_id == 1:
-            proposed_key = (solvers_names[FRANKWOLFE], mlmodel_names[KNNLINEARREGRESSION])
+            proposed_key = (solvers_names[FRANKWOLFE2], mlmodel_names[KNNLINEARREGRESSION])
 
             fig, ax1 = plt.subplots(1,1,figsize=(10,8))
             x_zahyo = [i for i in range(len(compare_list))]
@@ -341,6 +347,8 @@ def plot_result(compare_list, result_dic_for_plot, time_dic_for_plot, rho_dic_fo
             fig, ax1 = plt.subplots(1,1,figsize=(10,8))
             rdnears = np.array(rdnear_dic_for_plot[proposed_key])
             ave_rdnear, std_rdnear = np.average(rdnears, axis=0), np.std(objs, axis=0)
+            # print(np.nanargmin(ave_rdnear))
+            # print(ave_rdnear)
             if not use_errorbar:
                 # print(np.isnan(ave_rdnear))
                 not_nan_idx = [i for i in range(ave_rdnear.size) if not np.isnan(ave_rdnear[i])]

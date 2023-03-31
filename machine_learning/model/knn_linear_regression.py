@@ -11,6 +11,7 @@ class MyKnnLinearRegression(BaseMyModel):
         super().__init__(i)
         self.name = LINEARREGRESSION
         self.mdl = LinearRegression()
+        self.nearest_history = {}
 
     def set_data(self, x, y):
         self.x = x
@@ -21,26 +22,31 @@ class MyKnnLinearRegression(BaseMyModel):
     def fit_xk(self, x_k):
         tic2()
         nearest_idx, distances = self.knn.predict(x_k, g.n_nearest)
-        g.search_time += toc2()
-        nearest_x_list = self.x[nearest_idx]
-        # u, s, vh = svd(nearest_x_list)
-        average_x = np.mean(nearest_x_list, 0)
-        tic2()
-        # u, s, vh = svd(nearest_x_list-average_x)
-        s = -1
-        g.svd_time += toc2()
-        # print(f"最小特異値:{np.min(s)}")
-        min_s = np.min(s)
-        min_s = 1 / min_s
-        tic2()
-        diam = np.max(distances)
-        g.culcd_time += toc2()
-        # print(f"平均距離:{diam}")
+        try:
+            ans = self.nearest_history[tuple(nearest_idx)]
+            return ans, nearest_idx, True
+        except:
+            g.search_time += toc2()
+            nearest_x_list = self.x[nearest_idx]
+            average_x = np.mean(nearest_x_list, 0)
+            tic2()
+            # u, s, vh = svd(nearest_x_list)
+            # u, s, vh = svd(nearest_x_list-average_x)
+            s = -1
+            g.svd_time += toc2()
+            # print(f"最小特異値:{np.min(s)}")
+            min_s = np.min(s)
+            # min_s = 1 / min_s
+            tic2()
+            diam = np.max(distances)
+            g.culcd_time += toc2()
+            # print(f"平均距離:{diam}")
 
-        tic2()
-        self.mdl.fit(nearest_x_list, self.y[nearest_idx])
-        g.fit_time += toc2()
-        return distances, min_s, diam
+            tic2()
+            self.mdl.fit(nearest_x_list, self.y[nearest_idx])
+            g.fit_time += toc2()
+            self.nearest_history[tuple(nearest_idx)] = (distances, min_s, diam)
+            return (distances, min_s, diam), nearest_idx, False
 
     def set_parameter(self):
         try:

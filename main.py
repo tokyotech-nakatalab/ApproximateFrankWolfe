@@ -48,7 +48,6 @@ def main():
                                                     visualize_regression_shape(fs, solver.problem, S_optval, XS_train, C_train)
                                                     continue
 
-
                                                 if not is_only_learning:
                                                     opt_xs_list, obj_list, true_obj_list, ave_rho_list, ave_diameter_list, ave_rdnear_list = [], [], [], [], [], []
                                                     opt_time_list = []
@@ -128,11 +127,41 @@ def experiment_real_data():
         solver = select_opt_problem()
         solver.set_problem()
         init_x = np.array([[0, 0, 0]])
-        best_x, best_obj, best_true_obj, ave_rho, ave_diameter = solver.optimize(fs,np.array([[]]), init_x)
+        best_x, best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear = solver.optimize(fs,np.array([[]]), init_x)
         print(best_x, best_obj, best_true_obj, ave_rho, ave_diameter)
         result_list.append([best_x, best_obj, best_true_obj, ave_rho, ave_diameter])
     print("***************************")
     print(result_list)
+
+
+def experiment_real_data2():
+    df = pd.read_csv('./experiment/real_data/ENB2012_data.csv')
+    df["X6"] = df["X6"].astype(float)
+    df["X8"] = df["X8"].astype(float)
+    data = df.values
+    x = data[:, 0:8]
+    y = -1 * data[:, 8]
+    print(df.dtypes)
+    kouho_list = list(range(10, 210, 10))
+    kouho_list = [78]
+
+    g.n_item, g.select_opt, g.select_problem, g.select_data_type, g.n_feature, g.n_user_available_x, g.select_ml = 1, FRANKWOLFE2, NONCONSTRAINT, REAL, 8, 8, KNNLINEARREGRESSION
+    result_list = []
+    for g.n_nearest in kouho_list:
+        f = MyKnnLinearRegression(0)
+        f.set_data(x, y)
+        f.fit(x, y)
+        f.set_parameter()
+        fs = [f]
+        solver = select_opt_problem()
+        solver.set_problem()
+        init_x = np.array([x[0]])
+        best_x, best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear = solver.optimize(fs, np.array([[]]), init_x)
+        # print(best_x, best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear)
+        result_list.append([best_x, best_obj, best_true_obj, ave_rho, ave_diameter, ave_rdnear])
+        print("***************************")
+        for i in range(len(best_x[0])):
+            print(f"x{i}: {best_x[0][i]}")
 
 
 def plot_history(opt_time_list):
@@ -163,4 +192,5 @@ if __name__ == "__main__":
         generate_all_data()
         main()
     else:
-        experiment_real_data()
+        # experiment_real_data()
+        experiment_real_data2()
